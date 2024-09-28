@@ -1,4 +1,3 @@
-const request = require('supertest');
 const ender = require('./endpointHelper.js');
 
 test('status code error', () => {

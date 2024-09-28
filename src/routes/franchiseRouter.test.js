@@ -59,7 +59,7 @@ test('store', async()=>{
     const franchiseRes = await request(app).post('/api/franchise').set('Authorization', `Bearer ${adminAuthToken}`).send(testFranchise);
     expect(franchiseRes.status).toBe(200);
 
-    testStore = {"franchiseId": `${franchiseRes.body.id}`, "name":`${DB.randomName()}`};
+    const testStore = {"franchiseId": `${franchiseRes.body.id}`, "name":`${DB.randomName()}`};
     const storeRes = await request(app).post(`/api/franchise/${franchiseRes.body.id}/store`).set('Authorization', `Bearer ${adminAuthToken}`).send(testStore);
     expect(storeRes.status).toBe(200);
 

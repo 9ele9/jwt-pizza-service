@@ -5,7 +5,6 @@ const badUser = { name: 'pizza diner', email: 'reg@test.com', password: 'a'};
 let defaultMenu =[{ id: 1, title: 'Veggie', image: 'pizza1.png', price: 0.0038, description: 'A garden of delight' }];
 let testAdmin;
 let adminAuthToken;
-let adminID;
 let badUserAuthToken;
 //req format: {"name": "Pete's a nerd", "admins": [{"email": "f@jwt.com"}]}
 beforeAll(async () =>{
@@ -17,8 +16,7 @@ beforeAll(async () =>{
     //create admin
     testAdmin = await DB.createAdminUser();
     const adminRes = await request(app).put('/api/auth').send(testAdmin);
-    adminAuthToken = adminRes.body.token;
-    adminID = adminRes.body.user.id;
+    const adminAuthToken = adminRes.body.token;
 });
 
 test('menu get', async()=>{
