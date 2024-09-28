@@ -347,6 +347,21 @@ class DB {
     const [rows] = await connection.execute(`SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = ?`, [config.db.connection.database]);
     return rows.length > 0;
   }
+
+  randomName() {
+    return Math.random().toString(36).substring(2, 12);
+  }
+
+  async createAdminUser() {
+    let user = { password: 'toomanysecrets', roles: [{ role: Role.Admin }] };
+    user.name = this.randomName();
+    user.email = user.name + '@admin.com';
+  
+    await this.addUser(user);
+  
+    user.password = 'toomanysecrets';
+    return user;
+  }
 }
 
 const db = new DB();
