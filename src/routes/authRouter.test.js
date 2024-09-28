@@ -50,7 +50,7 @@ test('badUpdate', async () => {
 test('logout', async () => {
     const req = request(app);
     const logoutRes = await req.delete('/api/auth').set('Authorization', `Bearer ${testUserAuthToken}`);
-    console.log(logoutRes.status);
+    //console.log(logoutRes.status);
     expect(logoutRes.status).toBe(200);
     
     const logoutRes2 = await req.delete('/api/auth').send(testUser);

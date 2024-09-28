@@ -5,6 +5,7 @@ const badUser = { name: 'pizza diner', email: 'reg@test.com', password: 'a'};
 let defaultMenu =[{ id: 1, title: 'Veggie', image: 'pizza1.png', price: 0.0038, description: 'A garden of delight' }];
 let testAdmin;
 let adminAuthToken;
+let adminID;
 let badUserAuthToken;
 //req format: {"name": "Pete's a nerd", "admins": [{"email": "f@jwt.com"}]}
 beforeAll(async () =>{
@@ -16,7 +17,8 @@ beforeAll(async () =>{
     //create admin
     testAdmin = await DB.createAdminUser();
     const adminRes = await request(app).put('/api/auth').send(testAdmin);
-    const adminAuthToken = adminRes.body.token;
+    adminAuthToken = adminRes.body.token;
+    adminID = adminRes.body.user.id;
 });
 
 test('menu get', async()=>{
@@ -25,7 +27,7 @@ test('menu get', async()=>{
 })
 
 test('menu add', async()=>{
-    const newID = defaultMenu.length;
+    const newID = defaultMenu.length + 1;
     const newItem = { id: newID, title: `${DB.randomName()}`, image: 'none', price: 0.0001, description: 'none' };
     const addRes = await request(app).put('/api/order/menu').set('Authorization', `Bearer ${adminAuthToken}`).send(newItem);
     expect(addRes.status).toBe(200);
@@ -38,5 +40,8 @@ test('menu add', async()=>{
 test('order create', async()=>{
     const newOrder = {"franchiseId": 1, "storeId":1, "items":[{ "menuId": 1, "description": "Veggie", "price": 0.05 }]}
     const orderRes = await request(app).post('/api/order').set('Authorization', `Bearer ${badUserAuthToken}`).send(newOrder);
+    console.log(orderRes.text);
     expect(orderRes.status).toBe(200);
+    
 })
+
