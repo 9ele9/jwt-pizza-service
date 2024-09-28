@@ -28,7 +28,17 @@ test('menu get', async()=>{
 
 test('menu add', async()=>{
     const newID = defaultMenu.length;
-    const newItem = { id: newID, title: `${DB.random()}`, image: 'none', price: 0.0001, description: 'none' };
-    const addRes = await request(app).get('/api/order/menu').set('Authorization', `Bearer ${adminAuthToken}`).send(newItem);
+    const newItem = { id: newID, title: `${DB.randomName()}`, image: 'none', price: 0.0001, description: 'none' };
+    const addRes = await request(app).put('/api/order/menu').set('Authorization', `Bearer ${adminAuthToken}`).send(newItem);
     expect(addRes.status).toBe(200);
+
+    const baddItem = { id: newID+1, title: `${DB.randomName()}`, image: 'AAAAAAAAA', price: 999999999, description: 'AAAAAAAA' };
+    const baddRes = await request(app).put('/api/order/menu').set('Authorization', `Bearer ${badUserAuthToken}`).send(baddItem);
+    expect(baddRes.status).toBe(403);
+})
+
+test('order create', async()=>{
+    const newOrder = {"franchiseId": 1, "storeId":1, "items":[{ "menuId": 1, "description": "Veggie", "price": 0.05 }]}
+    const orderRes = await request(app).post('/api/order').set('Authorization', `Bearer ${badUserAuthToken}`).send(newOrder);
+    expect(orderRes.status).toBe(200);
 })
