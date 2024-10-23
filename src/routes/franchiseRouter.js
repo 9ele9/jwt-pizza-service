@@ -53,6 +53,7 @@ franchiseRouter.endpoints = [
     example: `curl -X DELETE localhost:3000/api/franchise/1/store/1  -H 'Authorization: Bearer tttttt'`,
     response: { message: 'store deleted' },
   },
+  
 ];
 
 // getFranchises

@@ -332,8 +332,13 @@ class DB {
         }
 
         if (!dbExists) {
-          const defaultAdmin = { name: '常用名字', email: 'a@jwt.com', password: 'admin', roles: [{ role: Role.Admin }] };
+          const defaultAdmin = { name: 'Changyong Mingzi', email: 'asdf@jwt.com', password: 'admin', roles: [{ role: Role.Admin }] };
+          const defaultTest = { name: 'Testin Testerson', email: 'test@test.com', password: 'test', roles: [{ role: Role.Diner }] };
+          const menuItem = { id: 1, title:'Japer', image: 'pizza1.png', price: 0.008, description: 'Why so serious?'}
+          this.addMenuItem(menuItem);
           this.addUser(defaultAdmin);
+          this.addUser(defaultTest);
+          
         }
       } finally {
         connection.end();
