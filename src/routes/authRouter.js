@@ -84,7 +84,12 @@ authRouter.put(
     const { email, password } = req.body;
     const user = await DB.getUser(email, password);
     const auth = await setAuth(user);
-    res.json({ user: user, token: auth });
+    
+    if(user.statusCode == 404){ 
+      res.json({ message: user.message });
+    }else{
+      res.json({ user: user, token: auth });
+    }
   })
 );
 
