@@ -17,7 +17,9 @@ class Logger {
       };
       this.getMetrics(logData);
       const level = this.statusToLogLevel(res.statusCode);
-      this.log(level, 'http', logData);
+      if(req.originalUrl == "/api/order" && req.method == "POST"){//Factory service call
+        this.log(level, 'factory-service', logData)
+      }else{this.log(level, 'http', logData);}
       res.send = send;
       return res.send(resBody);
     };
