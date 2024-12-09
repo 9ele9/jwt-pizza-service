@@ -292,7 +292,7 @@ class DB {
   }
 
   async getID(connection, key, value, table) {
-    const [rows] = await connection.execute(`SELECT id FROM ${table} WHERE ${key}=?`, [value]);
+    const [rows] = await connection.execute(`SELECT id FROM ? WHERE ?=?`, [table,key,value]);
     if (rows.length > 0) {
       return rows[0].id;
     }
@@ -334,7 +334,7 @@ class DB {
         }
 
         if (!dbExists) {
-          const defaultAdmin = { name: 'Changyong Mingzi', email: 'asdf@jwt.com', password: 'admin', roles: [{ role: Role.Admin }] };
+          const defaultAdmin = { name: 'Changyong Mingzi', email: 'asdf@jwt.com', password: 'movie', roles: [{ role: Role.Admin }] };
           const defaultTest = { name: 'Testin Testerson', email: 'test@test.com', password: 'test', roles: [{ role: Role.Diner }] };
           const menuItem = { id: 1, title:'Japer', image: 'pizza1.png', price: 0.008, description: 'Why so serious?'}
           this.addMenuItem(menuItem);
